@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { Textarea, Box, Button } from "@chakra-ui/react";
 
-export const Query: FC = ({ subTotal }) => {
+interface QueryProps {
+  subTotal: number;
+}
+
+export const Query: FC<QueryProps> = ({ subTotal }) => {
   return (
     <Box>
       <Textarea
