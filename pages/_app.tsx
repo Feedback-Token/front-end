@@ -111,6 +111,10 @@ export const client = createClient({
   connectors,
   provider,
 });
+interface AppProps {
+  Component: any;
+  pageProps: any;
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

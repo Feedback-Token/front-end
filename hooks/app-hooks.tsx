@@ -5,6 +5,7 @@ import {
   createContext,
   useContext,
   useState,
+  FC,
 } from "react";
 
 interface AppState {
@@ -23,7 +24,11 @@ export function useAppState(): AppState {
   return context;
 }
 
-export const AppProvider: React.FC = ({ children }) => {
+interface AppProviderProps {
+  children: React.ReactNode;
+}
+
+export const AppProvider: FC<AppProviderProps> = ({ children }) => {
   const [subToken, setSubToken] = useState<string>("0");
   const [tokenAmount, setTokenAmount] = useState<string>("0");
 
