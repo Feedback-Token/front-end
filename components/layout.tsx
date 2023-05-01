@@ -28,11 +28,11 @@ export const Layout: FC<LayoutProps> = ({
   const layoutPaddingX = ["0.75rem", "1rem", "2rem", "5rem"];
   const [width, setWidth] = useState(900);
 
-  if (typeof window !== "undefined") {
-    useEffect(() => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
       setWidth(window.innerWidth);
-    }, []);
-  }
+    }
+  }, []);
 
   return (
     <>

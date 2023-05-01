@@ -48,6 +48,7 @@ export const NavBar: FC<NavBarProps> = ({ width, paddingX }) => {
     const subWeiValue = BigNumber.from(subData?._hex);
     setTokenAmount(formatEther(tokenWeiValue));
     setSubToken(formatEther(subWeiValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
 
   return (

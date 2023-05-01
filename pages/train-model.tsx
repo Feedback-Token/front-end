@@ -21,6 +21,7 @@ const TrainModel: NextPage = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [userResponses, setUserResponses] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -44,6 +45,30 @@ const TrainModel: NextPage = () => {
 
     fetchData();
   }, []);
+
+  const handleInputChange = (e, question) => {
+    setUserResponses({ ...userResponses, [question]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/train", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userResponses),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit responses");
+      }
+
+      // TODO show a success message or redirect to another page
+    } catch (error) {
+      // TODO need to handle this still
+    }
+  };
   return (
     <Layout title="Vernari Protocol">
       <Breadcrumb
@@ -76,7 +101,10 @@ const TrainModel: NextPage = () => {
                 return (
                   <FormControl key={key} isRequired>
                     <FormLabel>{question}</FormLabel>
-                    <Input placeholder="feedback" />
+                    <Input
+                      placeholder="feedback"
+                      onChange={(e) => handleInputChange(e, question)}
+                    />
                   </FormControl>
                 );
               })}
@@ -86,7 +114,12 @@ const TrainModel: NextPage = () => {
       </div>
       <br />
       <Box display="flex" justifyContent="center">
-        <Button size="lg" variant="solid" colorScheme="orange">
+        <Button
+          size="lg"
+          variant="solid"
+          colorScheme="orange"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
       </Box>
