@@ -1,0 +1,71 @@
+import {
+  Box,
+  Button,
+  ButtonProps,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { FC } from "react";
+import { sepolia, useConnect, useAccount } from "wagmi";
+
+export const ConnectButton: FC<ButtonProps> = (buttonProps) => {
+  const { connector: activeConnector, isConnected } = useAccount();
+
+  const { connect, error, connectors, isLoading, pendingConnector } =
+    useConnect({
+      chainId: sepolia.id,
+    });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { children } = buttonProps;
+  return (
+    <>
+      <Button
+        rounded={"full"}
+        textColor={"white"}
+        px={6}
+        colorScheme={"orange"}
+        bg={"orange.400"}
+        _hover={{ bg: "orange.500" }}
+        onClick={onOpen}
+        {...buttonProps}
+        variant="base"
+      >
+        {children}
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg="rgb(0, 35, 102)">
+          <ModalHeader color="white">Connect</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Stack>
+              {connectors &&
+                connectors.map((connector) => (
+                  <Button
+                    variant="wallet"
+                    disabled={!connector.ready}
+                    key={connector.id}
+                    onClick={() => connect({ connector })}
+                  >
+                    {connector.name}
+                    {isLoading &&
+                      pendingConnector?.id === connector.id &&
+                      " (connecting)"}
+                  </Button>
+                ))}
+              {error && <Box>{error?.message ?? "Failed to connect"}</Box>}
+            </Stack>
+          </ModalBody>
+          <ModalFooter />
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
