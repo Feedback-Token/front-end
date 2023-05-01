@@ -17,6 +17,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+interface ModelPrompts {
+  category: string;
+  questions: string[];
+}
+
 const TrainModel: NextPage = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -36,7 +41,7 @@ const TrainModel: NextPage = () => {
         const data = await response.json();
         console.log(data);
         setData(data);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
       } finally {
         setIsLoading(false);
@@ -46,7 +51,7 @@ const TrainModel: NextPage = () => {
     fetchData();
   }, []);
 
-  const handleInputChange = (e, question) => {
+  const handleInputChange = (e: any, question: any) => {
     setUserResponses({ ...userResponses, [question]: e.target.value });
   };
 
@@ -91,7 +96,7 @@ const TrainModel: NextPage = () => {
         <option value="option3">Houston, TX</option>
       </Select>
       <div>
-        {data.map((question, key) => {
+        {data.map((question: ModelPrompts, key) => {
           return (
             <div key={key}>
               <br />

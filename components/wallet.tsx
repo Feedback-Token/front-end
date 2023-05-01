@@ -81,7 +81,7 @@ export const Wallet: FC = () => {
                     variant="outline"
                     colorScheme="yellow"
                     ml={2}
-                    hidden={!isLoading || pendingChainId !== chain.id}
+                    hidden={!isLoading || pendingChainId !== chain?.id}
                   >
                     Loading...
                   </Badge>

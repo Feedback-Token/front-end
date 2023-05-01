@@ -29,14 +29,15 @@ export const NavBar: FC<NavBarProps> = ({ width, paddingX }) => {
   const TOKEN_ABI = require("../contracts/Token.json");
   const SUB_ABI = require("../contracts/Subscription.json");
   const networkId = (chain?.id as number) || 11155111;
+
   const { data } = useContractRead({
-    address: addresses[networkId].token,
+    address: addresses[networkId].token as `0x${string}`,
     abi: TOKEN_ABI,
     functionName: "balanceOf",
     args: [address],
   });
   const { data: subData } = useContractRead({
-    address: addresses[networkId].subscription,
+    address: addresses[networkId].subscription as `0x${string}`,
     abi: SUB_ABI,
     functionName: "getSubscription",
     args: [address],
