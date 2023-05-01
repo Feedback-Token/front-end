@@ -3,7 +3,7 @@ import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { ChakraProvider } from "@chakra-ui/react";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
-import { theme } from "./styles/theme";
+import { theme } from "../components/styles/theme";
 import { AppProvider } from "../hooks/app-hooks";
 import {
   mainnet,
