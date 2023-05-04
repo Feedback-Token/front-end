@@ -36,7 +36,7 @@ export async function insertUserResponses(
 
     const insertPromptsQuery = `
         INSERT INTO prompts (model_id, question, answer)
-        VALUES ((SELECT id FROM models WHERE city = $1), $2, $3);
+        VALUES ((SELECT id FROM models WHERE region_id = $1), $2, $3);
       `;
 
     for (const response of userResponses) {
