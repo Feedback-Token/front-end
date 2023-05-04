@@ -26,7 +26,8 @@ const TrainModel: NextPage = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [userResponses, setUserResponses] = useState({});
+  const [userResponses, setUserResponses] = useState<Response[]>([]);
+  const [selectedRegion, setSelectedRegion] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -51,18 +52,38 @@ const TrainModel: NextPage = () => {
     fetchData();
   }, []);
 
+  interface Response {
+    question: string;
+    response: string;
+  }
   const handleInputChange = (e: any, question: any) => {
-    setUserResponses({ ...userResponses, [question]: e.target.value });
+    const responseIndex = userResponses.findIndex(
+      (response: Response) => response.question === question
+    );
+
+    if (responseIndex === -1) {
+      setUserResponses([
+        ...userResponses,
+        { question: question, response: e.target.value },
+      ]);
+    } else {
+      const updatedResponses: Response[] = [...userResponses];
+      updatedResponses[responseIndex].response = e.target.value;
+      setUserResponses(updatedResponses);
+    }
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("/api/train", {
+      const response = await fetch("/api/submitResponses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userResponses),
+        body: JSON.stringify({
+          responses: userResponses,
+          modelId: selectedRegion,
+        }),
       });
 
       if (!response.ok) {
@@ -90,10 +111,14 @@ const TrainModel: NextPage = () => {
       </Breadcrumb>
       <Divider />
       <br />
-      <Select placeholder="Select region">
-        <option value="option1">Austin, TX</option>
-        <option value="option2">Dallas, TX</option>
-        <option value="option3">Houston, TX</option>
+      <Select
+        placeholder="Select region"
+        value={selectedRegion}
+        onChange={(e) => setSelectedRegion(e.target.value)}
+      >
+        <option value="Austin, TX">Austin, TX</option>
+        <option value="Dallas, TX">Dallas, TX</option>
+        <option value="Houston, TX">Houston, TX</option>
       </Select>
       <div>
         {data.map((question: ModelPrompts, key) => {
