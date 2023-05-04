@@ -33,7 +33,7 @@ const TrainModel: NextPage = () => {
       setError(null);
 
       try {
-        const response = await fetch("http://localhost:5000/api/prompt");
+        const response = await fetch("/api/prompt");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -57,7 +57,7 @@ const TrainModel: NextPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/train", {
+      const response = await fetch("/api/train", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,0 +1,92 @@
+[
+  {
+    "category": "Culture and History",
+    "questions": [
+      "What are the must-visit historical sites in the area?",
+      "Are there any local customs or traditions I should be aware of?",
+      "What are the most important cultural events or festivals to attend?",
+      "Are there any local museums or galleries you would recommend?"
+    ]
+  },
+  {
+    "category": "Food and Drink",
+    "questions": [
+      "What local dishes should I try?",
+      "Can you recommend any popular local restaurants or food markets?",
+      "Are there any local food or drink festivals I should check out?",
+      "What are the typical dining customs and etiquette in this area?"
+    ]
+  },
+  {
+    "category": "Nature and Outdoors",
+    "questions": [
+      "What are the best outdoor activities to experience?",
+      "Can you suggest any scenic hiking trails or parks to visit?",
+      "What wildlife or nature reserves are worth exploring?",
+      "Are there any nearby beaches or bodies of water I should visit?"
+    ]
+  },
+  {
+    "category": "Entertainment and Nightlife",
+    "questions": [
+      "What are the best areas for nightlife and entertainment?",
+      "Can you recommend any local bars, clubs, or live music venues?",
+      "Are there any local theater, dance, or comedy shows I should see?",
+      "What are some popular local events or activities for the evenings?"
+    ]
+  },
+  {
+    "category": "Shopping",
+    "questions": [
+      "What are the best shopping districts or markets to visit?",
+      "Are there any local artisans or unique products I should look for?",
+      "What are the typical business hours for shops and markets?",
+      "Are there any local shopping customs or etiquette I should be aware of?"
+    ]
+  },
+  {
+    "category": "Transportation and Getting Around",
+    "questions": [
+      "What is the most efficient way to get around the city or region?",
+      "Are there any local transportation passes or discounts I should know about?",
+      "Can you provide any tips for navigating the public transportation system?",
+      "Are there any safety concerns or areas to avoid while using public transportation?"
+    ]
+  },
+  {
+    "category": "Safety and Health",
+    "questions": [
+      "What are the safest areas to stay and explore in the city or region?",
+      "Are there any local health concerns I should be aware of?",
+      "What is the best way to handle medical emergencies while traveling in this area?",
+      "Can you recommend any local pharmacies or clinics in case of medical needs?"
+    ]
+  },
+  {
+    "category": "Accommodation",
+    "questions": [
+      "What are the best neighborhoods or areas to stay in?",
+      "Can you recommend any hotels, hostels, or guesthouses that offer a local experience?",
+      "Are there any popular home-sharing services or platforms in the area?",
+      "What is the typical price range for accommodations in this region?"
+    ]
+  },
+  {
+    "category": "Communication and Connectivity",
+    "questions": [
+      "What is the most widely spoken language, and do many locals speak English?",
+      "Can you recommend any language learning resources or local language schools?",
+      "What is the availability and reliability of internet access and mobile phone networks?",
+      "Are there any local phone or data plans worth considering for my stay?"
+    ]
+  },
+  {
+    "category": "Local Tips and Hidden Gems",
+    "questions": [
+      "What are some lesser-known attractions or experiences I should check out?",
+      "Can you recommend any off-the-beaten-path destinations or day trips?",
+      "Are there any local volunteer opportunities or community organizations to get involved with?",
+      "Do you have any personal recommendations or insider tips for experiencing the area like a local?"
+    ]
+  }
+]
