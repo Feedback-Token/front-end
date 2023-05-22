@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { shortenAddress } from "../utils";
 import { ConnectButton } from "./connect-button";
 import { TriangleDownIcon } from "@chakra-ui/icons";
@@ -31,7 +33,10 @@ export const Wallet: FC = () => {
   const { data: ensName } = useEnsName();
   const { data: ensAvatar } = useEnsAvatar();
   const { disconnect } = useDisconnect();
-
+  const router = useRouter();
+  const handleRedirect = () => {
+    router.push("/");
+  };
   const signOut: () => void = async () => {
     disconnect();
   };
@@ -39,8 +44,19 @@ export const Wallet: FC = () => {
   const { chains, error, isLoading, pendingChainId, switchNetwork } =
     useSwitchNetwork();
   const isMounted = useIsMounted();
+  const [isLoadingApp, setIsLoading] = useState(true);
 
-  return address && isMounted() ? (
+  useEffect(() => {
+    if (isMounted()) {
+      setIsLoading(false);
+    }
+  }, [isMounted]);
+
+  if (isLoadingApp) {
+    return <></>;
+  }
+
+  return address ? (
     <Menu>
       <MenuButton
         as={Button}
@@ -90,7 +106,14 @@ export const Wallet: FC = () => {
             ))}
         </MenuGroup>
         <MenuDivider />
-        <MenuItem onClick={() => signOut()}>Disconnect</MenuItem>
+        <MenuItem
+          onClick={() => {
+            signOut();
+            handleRedirect();
+          }}
+        >
+          Disconnect
+        </MenuItem>
       </MenuList>
     </Menu>
   ) : (

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Layout } from "../components/layout";
 import { NextPage } from "next";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -7,11 +7,30 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Divider,
+  Input,
 } from "@chakra-ui/react";
 import { Query } from "@/components/query";
 import { useAppState } from "../hooks/app-hooks";
+import { FillSub } from "@/components/fill-subscription";
+import { ethers } from "ethers";
 const UseModel: NextPage = () => {
   const { subToken } = useAppState();
+  const [amount, setAmount] = useState("");
+  const [isValidAmount, setIsValidAmount] = useState(true);
+
+  const handleAmountChange = (e: any) => {
+    const value = e.target.value;
+    setAmount(value);
+
+    // Validate input
+    const regex = /^\d+(\.\d{0,18})?$/;
+    setIsValidAmount(regex.test(value));
+    console.log(isValidAmount);
+    if (isValidAmount) {
+      const amountInWei = ethers.utils.parseEther(amount);
+      setAmount(amountInWei.toString());
+    }
+  };
 
   return (
     <Layout title="Vernari Protocol">
@@ -28,7 +47,9 @@ const UseModel: NextPage = () => {
         </BreadcrumbItem>
       </Breadcrumb>
       <Divider />
-      <Query subTotal={subToken} />
+      <Input placeholder="Basic usage" onChange={handleAmountChange} />
+      <FillSub _amount={amount} />
+      <Query subTotal={"1"} />
     </Layout>
   );
 };

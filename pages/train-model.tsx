@@ -27,6 +27,7 @@ import {
   Text,
   useToast,
   Progress,
+  Spinner,
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import { useProvider, useNetwork, useAccount } from "wagmi";
@@ -226,26 +227,32 @@ const TrainModel: NextPage = () => {
         })}
       </Select>
       <div>
-        {data.map((question: ModelPrompts, key) => {
-          return (
-            <div key={key}>
-              <br />
-              <Heading>{question.category}</Heading>
-              <br></br>
-              {question.questions.map((question, key) => {
-                return (
-                  <FormControl key={key} isRequired>
-                    <FormLabel>{question}</FormLabel>
-                    <Input
-                      placeholder="feedback"
-                      onChange={(e) => handleInputChange(e, question)}
-                    />
-                  </FormControl>
-                );
-              })}
-            </div>
-          );
-        })}
+        {isLoading ? (
+          <Box>
+            <Spinner />
+          </Box>
+        ) : (
+          data.map((question: ModelPrompts, key) => {
+            return (
+              <div key={key}>
+                <br />
+                <Heading>{question.category}</Heading>
+                <br></br>
+                {question.questions.map((question, key) => {
+                  return (
+                    <FormControl key={key} isRequired>
+                      <FormLabel>{question}</FormLabel>
+                      <Input
+                        placeholder="feedback"
+                        onChange={(e) => handleInputChange(e, question)}
+                      />
+                    </FormControl>
+                  );
+                })}
+              </div>
+            );
+          })
+        )}
       </div>
       <br />
       <Box display="flex" justifyContent="center">
