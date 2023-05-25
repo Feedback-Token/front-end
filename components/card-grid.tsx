@@ -10,42 +10,27 @@ import {
   Button,
   Link,
   Flex,
+  useColorModeValue,
+  Center,
 } from "@chakra-ui/react";
+import { Card as DashboardCard } from "./dashboard/card";
 
 export const CardGrid: FC = () => {
   return (
-    <Flex>
-      <SimpleGrid spacing={10} flexWrap="wrap" display="flex">
-        <Card>
-          <CardHeader>
-            <Heading size="md">Train Model</Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>Get paid to train AI models</Text>
-          </CardBody>
-          <CardFooter>
-            <Link href="/train-model">
-              <Button>View</Button>
-            </Link>
-          </CardFooter>
-        </Card>
-        <Card>
-          <CardHeader>
-            <Heading size="md">Use Model</Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              Get real time information on destionations around the world
-              trained by users in that area.
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Link href="/use-model">
-              <Button>View</Button>
-            </Link>
-          </CardFooter>
-        </Card>
-      </SimpleGrid>
-    </Flex>
+    <Center justifyContent={"space-around"} maxW={"5xl"} flexWrap={"wrap"}>
+      <DashboardCard
+        name="Train Model"
+        about={"Get paid to train AI models."}
+        link="/train-model"
+        buttonName="Start Training"
+      />
+      <DashboardCard
+        name="Use Model"
+        about="Get real time information on destionations around the world
+          trained by users in that area."
+        link="/use-model"
+        buttonName="Start Using"
+      />
+    </Center>
   );
 };
