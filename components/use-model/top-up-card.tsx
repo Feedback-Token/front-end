@@ -28,7 +28,7 @@ import {
 import { addresses } from "../../utils";
 import { ethers } from "ethers";
 import { prepareWriteContract, writeContract } from "@wagmi/core";
-import { getTokenBalance } from "../../utils";
+import { getSubBalance } from "../../utils";
 import { useAppState } from "../../hooks/app-hooks";
 
 const IMAGE = "/images/braincloud.png";
@@ -46,7 +46,7 @@ export const TopUpCard: FC = () => {
   const networkId = (chain?.id as number) || 11155111;
   const toast = useToast();
   const account = useAccount();
-  const { setTokenAmount } = useAppState();
+  const { setSubToken } = useAppState();
 
   useEffect(() => {
     if (error) {
@@ -89,9 +89,7 @@ export const TopUpCard: FC = () => {
       setProgress(80);
       if (!isSuccess) throw new Error("Request to top up was not successful");
       setIsLoading(false);
-      const balance = await getTokenBalance(account.address as string);
-      setTokenAmount(balance);
-      console.log("h", balance);
+      setSubToken(amount);
       return data;
     } catch (error: any) {
       setError(error.message);

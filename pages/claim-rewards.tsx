@@ -17,7 +17,7 @@ import { ethers } from "ethers";
 import { TopUpCard } from "@/components/use-model/top-up-card";
 import { getSubBalance } from "../utils";
 import { useAccount } from "wagmi";
-const UseModel: NextPage = () => {
+const ClaimRewards: NextPage = () => {
   const { subToken } = useAppState();
   const account = useAccount();
   const [amount, setAmount] = useState("0.0");
@@ -63,7 +63,7 @@ const UseModel: NextPage = () => {
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink href="/use-model">Use-Model</BreadcrumbLink>
+          <BreadcrumbLink href="/claim-rewards">Claim-Rewards</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Divider />
@@ -87,4 +87,4 @@ const UseModel: NextPage = () => {
     </Layout>
   );
 };
-export default UseModel;
+export default ClaimRewards;

@@ -4,26 +4,15 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatArrow,
-  StatGroup,
-  Flex,
-  Box,
-  Container,
+  Center,
 } from "@chakra-ui/react";
-import { useSigner } from "wagmi";
 import { useAppState } from "../hooks/app-hooks";
 
 export const UserData: FC = () => {
   const { subToken, tokenAmount } = useAppState();
 
-  const {
-    data: signer,
-    error: signerError,
-    isLoading: signerLoading,
-  } = useSigner();
-
   return (
-    <Flex>
+    <Center justifyContent={"space-between"} maxW={"full"}>
       <Stat>
         <StatLabel>Wallet Balance</StatLabel>
         <StatNumber>{tokenAmount}</StatNumber>
@@ -34,11 +23,11 @@ export const UserData: FC = () => {
         <StatNumber>{subToken}</StatNumber>
         <StatHelpText>FBT</StatHelpText>
       </Stat>
-      {/* <Stat>
-        <StatLabel>Function Balance</StatLabel>
+      <Stat>
+        <StatLabel>Locked Tokens</StatLabel>
         <StatNumber>3</StatNumber>
-        <StatHelpText>LINK</StatHelpText>
-      </Stat> */}
-    </Flex>
+        <StatHelpText>veFBT</StatHelpText>
+      </Stat>
+    </Center>
   );
 };

@@ -15,12 +15,15 @@ import { useProvider, useNetwork, useAccount } from "wagmi";
 import { ethers } from "ethers";
 import { addresses } from "../utils";
 import { Answer } from "./use-model/answer";
+import { getSubBalance } from "../utils";
+import { useAppState } from "../hooks/app-hooks";
 
 interface QueryProps {
   subTotal: string;
 }
 
 export const Query: FC<QueryProps> = ({ subTotal }) => {
+  const { setSubToken } = useAppState();
   const [userQuestion, setUserQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("Hi, what can I help you with?");
   const [txHash, setTxHash] = useState<string>("");
@@ -28,6 +31,7 @@ export const Query: FC<QueryProps> = ({ subTotal }) => {
   const [error, setError] = useState<string | null>(null);
   const [regions, setRegions] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState("");
+  const [amount, setAmount] = useState("0.0");
 
   const { chain } = useNetwork();
   const { address } = useAccount();
@@ -41,6 +45,21 @@ export const Query: FC<QueryProps> = ({ subTotal }) => {
     SUB_ABI,
     wallet
   );
+  useEffect(() => {
+    const fetchData = async () => {
+      setError(null);
+
+      try {
+        const balance = await getSubBalance(address as string);
+        setAmount(balance);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+      }
+    };
+
+    fetchData();
+  }, [address]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,6 +130,9 @@ export const Query: FC<QueryProps> = ({ subTotal }) => {
       const data = await response.json();
       setIsLoading(false);
       setAnswer(data.message);
+      const balance = await getSubBalance(address as string);
+      setAmount(balance);
+      // setSubToken(balance);
     } catch (error: any) {
       console.error(error);
     }
@@ -161,26 +183,46 @@ export const Query: FC<QueryProps> = ({ subTotal }) => {
         <Box bg={useColorModeValue("gray.50", "gray.900")} px={6} py={10}>
           <Textarea
             onChange={handleUserQuestion}
-            isDisabled={parseInt(subTotal) <= 0}
+            isDisabled={parseInt(amount) <= 0}
             placeholder="question..."
           />
-          <Button
-            onClick={handleQuestion}
-            mt={10}
-            w={"full"}
-            bg={"orange.400"}
-            color={"white"}
-            rounded={"xl"}
-            boxShadow={"0 5px 20px 0px rgb(232 113 26 / 43%)"}
-            _hover={{
-              bg: "orange.500",
-            }}
-            _focus={{
-              bg: "orange.500",
-            }}
-          >
-            Ask!
-          </Button>
+          {amount !== "0.0" ? (
+            <Button
+              onClick={handleQuestion}
+              mt={10}
+              w={"full"}
+              bg={"orange.400"}
+              color={"white"}
+              rounded={"xl"}
+              boxShadow={"0 5px 20px 0px rgb(232 113 26 / 43%)"}
+              _hover={{
+                bg: "orange.500",
+              }}
+              _focus={{
+                bg: "orange.500",
+              }}
+            >
+              Ask!
+            </Button>
+          ) : (
+            <Button
+              onClick={() => window.location.reload()}
+              mt={10}
+              w={"full"}
+              bg={"orange.400"}
+              color={"white"}
+              rounded={"xl"}
+              boxShadow={"0 5px 20px 0px rgb(232 113 26 / 43%)"}
+              _hover={{
+                bg: "orange.500",
+              }}
+              _focus={{
+                bg: "orange.500",
+              }}
+            >
+              Top Up
+            </Button>
+          )}
         </Box>
         {isLoading ? (
           <Progress size="xs" isIndeterminate colorScheme="orange" />

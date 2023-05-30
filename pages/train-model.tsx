@@ -7,7 +7,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Divider,
-  Textarea,
+  Center,
   Heading,
   FormControl,
   FormLabel,
@@ -228,9 +228,15 @@ const TrainModel: NextPage = () => {
       </Select>
       <div>
         {isLoading ? (
-          <Box>
-            <Spinner />
-          </Box>
+          <Center marginTop={"200px"} marginBottom={"200px"}>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="orange.200"
+              color="orange.500"
+              size="xl"
+            />
+          </Center>
         ) : (
           data.map((question: ModelPrompts, key) => {
             return (

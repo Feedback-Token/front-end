@@ -1,5 +1,6 @@
 import { readContract } from "@wagmi/core";
 const TOKEN_ABI = require("../contracts/Token.json");
+const SUB_ABI = require("../contracts/Subscription.json");
 import { formatEther } from "ethers/lib/utils";
 import { BigNumber } from "ethers";
 
@@ -26,6 +27,21 @@ export const getTokenBalance = async (address: string) => {
       address: token as `0x${string}`,
       abi: TOKEN_ABI,
       functionName: "balanceOf",
+      args: [address],
+    });
+    return formatEther(BigNumber.from(data?._hex));
+  } catch (error: any) {
+    throw new Error(`Error getting claimable link: ${error.message}`);
+  }
+};
+
+export const getSubBalance = async (address: string) => {
+  const token = addresses[11155111].subscription;
+  try {
+    const data = await readContract({
+      address: token as `0x${string}`,
+      abi: SUB_ABI,
+      functionName: "getSubscription",
       args: [address],
     });
     return formatEther(BigNumber.from(data?._hex));

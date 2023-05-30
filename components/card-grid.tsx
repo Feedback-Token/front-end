@@ -1,23 +1,10 @@
 import { FC } from "react";
-import {
-  SimpleGrid,
-  Card,
-  Heading,
-  CardHeader,
-  CardFooter,
-  CardBody,
-  Text,
-  Button,
-  Link,
-  Flex,
-  useColorModeValue,
-  Center,
-} from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { Card as DashboardCard } from "./dashboard/card";
 
 export const CardGrid: FC = () => {
   return (
-    <Center justifyContent={"space-around"} maxW={"5xl"} flexWrap={"wrap"}>
+    <Center justifyContent={"space-between"} maxW={"full"} flexWrap={"wrap"}>
       <DashboardCard
         name="Train Model"
         about={"Get paid to train AI models."}
@@ -26,10 +13,16 @@ export const CardGrid: FC = () => {
       />
       <DashboardCard
         name="Use Model"
-        about="Get real time information on destionations around the world
+        about="Get real time information on destinations around the world
           trained by users in that area."
         link="/use-model"
         buttonName="Start Using"
+      />
+      <DashboardCard
+        name="Lock Tokens"
+        about="Lock your tokens to earn rewards and governance rights."
+        link="/claim-rewards"
+        buttonName="Start Claiming"
       />
     </Center>
   );
