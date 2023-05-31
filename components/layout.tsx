@@ -8,7 +8,7 @@ import {
   IconButton,
   Spacer,
 } from "@chakra-ui/react";
-
+import { Footer } from "./footer";
 import Head from "next/head";
 import { FC, ReactNode, useState, useEffect } from "react";
 
@@ -64,6 +64,7 @@ export const Layout: FC<LayoutProps> = ({
         </Flex>
         {children}
       </Container>
+      <Footer />
     </>
   );
 };

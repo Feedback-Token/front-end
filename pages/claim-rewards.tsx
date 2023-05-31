@@ -11,25 +11,29 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
-import { Query } from "@/components/query";
+import { ClaimRewards } from "@/components/earn-rewards/claim-rewards";
 import { useAppState } from "../hooks/app-hooks";
-import { ethers } from "ethers";
-import { TopUpCard } from "@/components/use-model/top-up-card";
-import { getSubBalance } from "../utils";
+import { LockTokens } from "@/components/earn-rewards/lock-tokens";
+import { getRewardBalance, getVEBalance, getTokenBalance } from "../utils";
 import { useAccount } from "wagmi";
-const UseModel: NextPage = () => {
+const EarnRewards: NextPage = () => {
   const { subToken } = useAppState();
   const account = useAccount();
-  const [amount, setAmount] = useState("0.0");
+  const [rewards, setRewards] = useState("0.0");
+  const [veBalance, setVeBalance] = useState("0.0");
+  const [fbtBalance, setFbtBalance] = useState("0.0");
   const [itemLoaded, setLoaded] = useState(false);
-  console.log(subToken, "subtoken");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const balance = await getSubBalance(account.address as string);
+        const balance = await getRewardBalance(account.address as string);
+        const veTokens = await getVEBalance(account.address as string);
+        const fbtTokens = await getTokenBalance(account.address as string);
         console.log(balance, "balance");
-        setAmount(balance);
+        setRewards(balance);
+        setVeBalance(veTokens);
+        setFbtBalance(fbtTokens);
         setLoaded(true);
       } catch (error) {
         console.error("Error:", error);
@@ -37,21 +41,8 @@ const UseModel: NextPage = () => {
     };
 
     fetchData();
-  }, [account.address, subToken]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const balance = await getSubBalance(account.address as string);
-        console.log(balance, "balance");
-        setAmount(balance);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    fetchData();
   }, [account.address]);
+
   return (
     <Layout title="Vernari Protocol">
       <Breadcrumb
@@ -63,16 +54,15 @@ const UseModel: NextPage = () => {
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink href="/use-model">Use-Model</BreadcrumbLink>
+          <BreadcrumbLink href="/claim-rewards">Claim-Rewards</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Divider />
       {itemLoaded ? (
-        amount == "0.0" ? (
-          <TopUpCard />
-        ) : (
-          <Query subTotal={subToken} />
-        )
+        <Center justifyContent={"space-around"}>
+          <LockTokens veAmount={veBalance} fbtAmount={fbtBalance} />
+          <ClaimRewards rewards={rewards} veAmount={veBalance} />
+        </Center>
       ) : (
         <Center marginTop={"200px"} marginBottom={"200px"}>
           <Spinner
@@ -87,4 +77,4 @@ const UseModel: NextPage = () => {
     </Layout>
   );
 };
-export default UseModel;
+export default EarnRewards;
