@@ -141,6 +141,7 @@ export const TopUpCard: FC = () => {
           }}
         >
           <Image
+            alt="top up subscription"
             rounded={"lg"}
             height={230}
             width={282}
