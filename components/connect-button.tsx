@@ -41,7 +41,7 @@ export const ConnectButton: FC<ButtonProps> = (buttonProps) => {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="rgb(0, 35, 102)">
+        <ModalContent bg="rgb(167, 84, 15)">
           <ModalHeader color="white">Connect</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
