@@ -66,28 +66,28 @@ export default function GridListWith() {
           Get Paid to Train AI Models
         </Heading>
         <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-          BrainCloud allows users to train AI models about their local areas.
-          Users can then use these models to get real time information about
-          transportation, housing, dining and much more when traveling to new
-          areas.
+          Elevating your travels, BrainCloud merges AI and token economics to
+          deliver personalized, real-time city advice, while empowering you to
+          earn exciting rewards by shaping the very models that guide your
+          journey!
         </Text>
       </Stack>
 
       <Container maxW={"5xl"} mt={12}>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
           <Card
-            heading={"AI Assistant"}
+            heading={"AI Travel Assistant"}
             icon={<Icon as={FcAssistant} w={10} h={10} />}
             description={
-              "Find out all of the most up to date information from locals who live there."
+              "From finding hidden local gems to avoiding peak-hour traffic, our AI Assistant is your real-time, intelligent travel guide."
             }
             href={"#"}
           />
           <Card
-            heading={"Something"}
+            heading={"$FBT Rewards"}
             icon={<Icon as={FcCollaboration} w={10} h={10} />}
             description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
+              "Refine city models with your travel expertise and watch your FBT token balance grow."
             }
             href={"#"}
           />
@@ -95,22 +95,6 @@ export default function GridListWith() {
             heading={"Get Paid"}
             icon={<Icon as={FcDonate} w={10} h={10} />}
             description={"Get paid to train AI models about your local area."}
-            href={"#"}
-          />
-          <Card
-            heading={"Something"}
-            icon={<Icon as={FcManager} w={10} h={10} />}
-            description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
-            }
-            href={"#"}
-          />
-          <Card
-            heading={"Something"}
-            icon={<Icon as={FcAbout} w={10} h={10} />}
-            description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
-            }
             href={"#"}
           />
         </Flex>

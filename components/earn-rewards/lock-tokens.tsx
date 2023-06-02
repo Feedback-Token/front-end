@@ -4,9 +4,6 @@ import {
   Center,
   Text,
   Stack,
-  List,
-  ListItem,
-  ListIcon,
   Button,
   useColorModeValue,
   Icon,
@@ -14,9 +11,20 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
+  Input,
+  Tooltip,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Progress,
 } from "@chakra-ui/react";
-
-import { calculateTimeLock, toEth } from "../../utils";
+import { useNetwork } from "wagmi";
+import { calculateTimeLock, toEth, lockTokens } from "../../utils";
 
 interface CardProps {
   veAmount: string;
@@ -33,8 +41,35 @@ const CircleIcon = (props: any) => (
 );
 
 export const LockTokens: FC<CardProps> = ({ veAmount, fbtAmount }) => {
-  const [months, setMonths] = useState(12);
+  const [months, setMonths] = useState(0);
   const [veTotal, setVETotal] = useState("0");
+  const [amount, setAmount] = useState("0");
+  const [isValidAmount, setIsValidAmount] = useState(false);
+  const [toolTipDisabled, setToolTipDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(20);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { chain } = useNetwork();
+  const networkId = (chain?.id as number) || 11155111;
+
+  const handleAmountChange = (e: any) => {
+    const value = String(e.target.value);
+    setAmount(value);
+    setToolTipDisabled(true);
+    setButtonDisabled(false);
+    if (parseInt(value) > parseInt(fbtAmount)) {
+      setToolTipDisabled(false);
+      setButtonDisabled(true);
+    }
+
+    // Validate input
+    const regex = /^\d+(\.\d{0,18})?$/;
+    const isValidAmountNow = regex.test(value);
+    setIsValidAmount(isValidAmountNow);
+  };
+
   return (
     <Center py={100}>
       <Box
@@ -80,19 +115,26 @@ export const LockTokens: FC<CardProps> = ({ veAmount, fbtAmount }) => {
           py={10}
           minH={"150px"}
         >
+          <Input
+            placeholder="0.0 FBT"
+            isInvalid={!toolTipDisabled}
+            errorBorderColor="red.300"
+            onChange={handleAmountChange}
+            marginBottom={5}
+          />
           <Text fontSize={"2xl"}>{months} months</Text>
 
           <RangeSlider
             colorScheme="orange"
-            defaultValue={[12]}
+            defaultValue={[1]}
             step={1}
             max={48}
             min={1}
             onChangeEnd={(val) => {
-              const amount = calculateTimeLock(val[0], fbtAmount);
+              const _amount = calculateTimeLock(val[0], amount);
 
               setMonths(val[0]);
-              fbtAmount ? setVETotal(toEth(amount)) : null;
+              fbtAmount ? setVETotal(toEth(_amount)) : null;
             }}
           >
             <RangeSliderTrack>
@@ -102,24 +144,63 @@ export const LockTokens: FC<CardProps> = ({ veAmount, fbtAmount }) => {
               <CircleIcon boxSize={6} color="orange.100" />
             </RangeSliderThumb>
           </RangeSlider>
-          <Button
-            mt={10}
-            w={"full"}
-            bg={"orange.400"}
-            color={"white"}
-            rounded={"xl"}
-            boxShadow={"0 5px 20px 0px rgb(232 113 26 / 43%)"}
-            _hover={{
-              bg: "orange.500",
-            }}
-            _focus={{
-              bg: "orange.500",
-            }}
-          >
-            {"Lock Tokens"}
-          </Button>
+          <Tooltip isDisabled={toolTipDisabled} label="Not enough FBT!">
+            <Button
+              onClick={async () => {
+                await lockTokens(
+                  amount,
+                  networkId,
+                  months,
+                  setProgress,
+                  setIsLoading,
+                  onOpen
+                );
+              }}
+              isDisabled={buttonDisabled}
+              mt={10}
+              w={"full"}
+              bg={"orange.400"}
+              color={"white"}
+              rounded={"xl"}
+              boxShadow={"0 5px 20px 0px rgb(232 113 26 / 43%)"}
+              _hover={{
+                bg: "orange.500",
+              }}
+              _focus={{
+                bg: "orange.500",
+              }}
+            >
+              {"Lock Tokens"}
+            </Button>
+          </Tooltip>
         </Box>
       </Box>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Locking Tokens</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {isLoading ? (
+              <Progress value={progress} size="xs" colorScheme="orange" />
+            ) : (
+              <Text>Tokens Locked!</Text>
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              size="lg"
+              variant="solid"
+              colorScheme="orange"
+              mr={3}
+              onClick={onClose}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Center>
   );
 };

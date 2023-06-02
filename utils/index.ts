@@ -111,23 +111,36 @@ export const getVEBalance = async (address: string) => {
 export const lockTokens = async (
   amount: string,
   networkId: number,
-  timeLock: number
+  timeLock: number,
+  progressCallback: (progress: number) => void,
+  loadingCallback: (loading: boolean) => void,
+  isOpenCallback: () => void
 ) => {
   try {
     const encodedRaffleParams = ethers.utils.defaultAbiCoder.encode(
       ["uint256"],
-      [timeLock]
+      [timeLock * 30 * 24 * 60 * 60]
     );
     const paramsConfig = {
       address: addresses[networkId].token as `0x${string}`,
       abi: TOKEN_ABI,
       functionName: "transferAndCall",
-      args: [addresses[networkId].rewardsPool, amount, encodedRaffleParams],
+      args: [
+        addresses[networkId].rewardsPool,
+        ethers.utils.parseEther(amount),
+        encodedRaffleParams,
+      ],
     };
     const config = await prepareWriteContract(paramsConfig);
     const data = await writeContract(config);
+    isOpenCallback();
+    loadingCallback(true);
+    progressCallback(30);
     const isSuccess = await data.wait().then((receipt) => receipt.status === 1);
     if (!isSuccess) throw new Error("Transaction failed");
+    progressCallback(80);
+    await sleep(2000);
+    loadingCallback(false);
   } catch (error: any) {
     throw new Error(`Error locking tokens: ${error.message}`);
   }
@@ -139,3 +152,7 @@ export const toEth = (wei: string): string => {
   const stringWith3DecimalPlaces = roundedNumber.toString();
   return stringWith3DecimalPlaces;
 };
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

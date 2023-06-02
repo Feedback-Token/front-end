@@ -24,15 +24,15 @@ export default function Hero() {
           fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
           lineHeight={"110%"}
         >
-          User powered AI{" "}
+          Adventures Powered by{" "}
           <Text as={"span"} color={"orange.400"}>
-            made easy
+            Intelligent Guidance
           </Text>
         </Heading>
         <Text color={"gray.500"} maxW={"3xl"}>
-          Earn money by training AI models about your area and help users get
-          real time information on traveling to different areas around the
-          world.
+          Embark on an exciting journey with BrainCloud! Shape AI models using
+          your local expertise, help travellers globally access real-time
+          information, and earn rewards along the way!
         </Text>
         <Stack spacing={6} direction={"row"}>
           <ConnectButton>Connect Wallet</ConnectButton>
