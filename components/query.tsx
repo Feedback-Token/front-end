@@ -8,7 +8,6 @@ import {
   Center,
   useColorModeValue,
   Select,
-  Flex,
   Progress,
 } from "@chakra-ui/react";
 import { useProvider, useNetwork, useAccount } from "wagmi";

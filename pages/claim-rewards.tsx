@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "../components/layout";
 import { NextPage } from "next";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -7,17 +7,14 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Divider,
-  Input,
   Center,
   Spinner,
 } from "@chakra-ui/react";
 import { ClaimRewards } from "@/components/earn-rewards/claim-rewards";
-import { useAppState } from "../hooks/app-hooks";
 import { LockTokens } from "@/components/earn-rewards/lock-tokens";
 import { getRewardBalance, getVEBalance, getTokenBalance } from "../utils";
 import { useAccount } from "wagmi";
 const EarnRewards: NextPage = () => {
-  const { subToken } = useAppState();
   const account = useAccount();
   const [rewards, setRewards] = useState("0.0");
   const [veBalance, setVeBalance] = useState("0.0");
@@ -30,7 +27,6 @@ const EarnRewards: NextPage = () => {
         const balance = await getRewardBalance(account.address as string);
         const veTokens = await getVEBalance(account.address as string);
         const fbtTokens = await getTokenBalance(account.address as string);
-        console.log(balance, "balance");
         setRewards(balance);
         setVeBalance(veTokens);
         setFbtBalance(fbtTokens);
@@ -44,7 +40,7 @@ const EarnRewards: NextPage = () => {
   }, [account.address]);
 
   return (
-    <Layout title="Vernari Protocol">
+    <Layout title="BrainCloud">
       <Breadcrumb
         spacing="8px"
         separator={<ChevronRightIcon color="gray.500" />}

@@ -7,12 +7,10 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
-import { useAppState } from "../hooks/app-hooks";
 import { getSubBalance, getVEBalance, getTokenBalance } from "../utils";
 import { useAccount } from "wagmi";
 
 export const UserData: FC = () => {
-  const { subToken, tokenAmount } = useAppState();
   const [veBalance, setVeBalance] = useState("0.0");
   const [fbtBalance, setFbtBalance] = useState("0.0");
   const [subBalance, setSubBalance] = useState("0.0");

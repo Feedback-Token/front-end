@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "../components/layout";
 import { NextPage } from "next";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -7,13 +7,11 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Divider,
-  Input,
   Center,
   Spinner,
 } from "@chakra-ui/react";
 import { Query } from "@/components/query";
 import { useAppState } from "../hooks/app-hooks";
-import { ethers } from "ethers";
 import { TopUpCard } from "@/components/use-model/top-up-card";
 import { getSubBalance } from "../utils";
 import { useAccount } from "wagmi";
@@ -28,7 +26,6 @@ const UseModel: NextPage = () => {
     const fetchData = async () => {
       try {
         const balance = await getSubBalance(account.address as string);
-        console.log(balance, "balance");
         setAmount(balance);
         setLoaded(true);
       } catch (error) {
@@ -43,7 +40,6 @@ const UseModel: NextPage = () => {
     const fetchData = async () => {
       try {
         const balance = await getSubBalance(account.address as string);
-        console.log(balance, "balance");
         setAmount(balance);
       } catch (error) {
         console.error("Error:", error);
@@ -53,7 +49,7 @@ const UseModel: NextPage = () => {
     fetchData();
   }, [account.address]);
   return (
-    <Layout title="Vernari Protocol">
+    <Layout title="BrainCloud">
       <Breadcrumb
         spacing="8px"
         separator={<ChevronRightIcon color="gray.500" />}

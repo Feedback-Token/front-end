@@ -1,19 +1,10 @@
-// import { Logo } from '../img/logo';
-// import { ColorModeSwitcher } from "./color-mode-switcher";
-// import { MobileMenu } from "./mobile-menu";
 import { StandardMenu } from "./standard-menu";
 import { Wallet } from "./wallet";
 import { Flex, Link, Heading } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
-import {
-  useContractRead,
-  useSigner,
-  useProvider,
-  useAccount,
-  useNetwork,
-} from "wagmi";
-import { BigNumber, ContractTransaction } from "ethers";
-import { formatEther, getAddress, isAddress } from "ethers/lib/utils";
+import { useContractRead, useAccount, useNetwork } from "wagmi";
+import { BigNumber } from "ethers";
+import { formatEther } from "ethers/lib/utils";
 import { useAppState } from "../hooks/app-hooks";
 import { addresses } from "../utils";
 

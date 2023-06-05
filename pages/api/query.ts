@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
-import { utils, ethers } from "ethers";
+import { ethers } from "ethers";
 import { query } from "../../lib/db";
 
 const configuration = new Configuration({

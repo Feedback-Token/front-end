@@ -1,13 +1,6 @@
 import { NavBar } from "./navbar";
 import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Center,
-  Container,
-  Flex,
-  IconButton,
-  Spacer,
-} from "@chakra-ui/react";
+import { Center, Container, Flex, IconButton, Spacer } from "@chakra-ui/react";
 import { Footer } from "./footer";
 import Head from "next/head";
 import { FC, ReactNode, useState, useEffect } from "react";

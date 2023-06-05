@@ -5,7 +5,6 @@ const REWARDS_ABI = require("../contracts/Rewards.json");
 const VE_ABI = require("../contracts/Escrow.json");
 import { formatEther } from "ethers/lib/utils";
 import { BigNumber, ethers } from "ethers";
-import { time } from "console";
 
 export const shortenAddress = (addr: string): string =>
   `${addr.substring(0, 6)}...${addr.slice(addr.length - 4)}`;
@@ -20,7 +19,7 @@ type AddressRecord = {
 };
 export const addresses: AddressRecord = {
   11155111: {
-    subscription: "0x44785819b9d2fA30Afd69d48c3c48fF149CAb297",
+    subscription: "0x0bfBD34e34C3f0E97F3232D67eF00aF8dA54eDcf",
     token: "0x6add4328327E6b66eA13AE64957B312fa210fCdd",
     rewardsPool: "0x061112Aa73f75Ca4Da88c92275116ad74F880205",
     veToken: "0xD016adDe6C97099143C6f7C6652F82d18B241845",
@@ -37,12 +36,10 @@ export const calculateTimeLock = (
   let bigNumberAmount = ethers.utils.parseEther(amountInEth);
   const timeInSeconds = BigNumber.from(timeInMonths).mul(secondsInAMonth);
 
-  // Check if the user has chosen the maximum time lock
   if (maxMonths === timeInMonths) {
     // Return the full amount
     return formatEther(bigNumberAmount);
   } else {
-    // Otherwise, calculate the amount of veTokens
     const veTokenAmount = bigNumberAmount.mul(timeInSeconds).div(maxTime);
     return formatEther(veTokenAmount);
   }

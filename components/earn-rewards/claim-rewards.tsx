@@ -4,14 +4,9 @@ import {
   Center,
   Text,
   Stack,
-  List,
-  ListItem,
-  ListIcon,
   Button,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
 
 interface CardProps {
   rewards: string;

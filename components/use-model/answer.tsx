@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Avatar, Box, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 
 interface AnswerProps {

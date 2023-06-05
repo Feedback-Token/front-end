@@ -1,4 +1,4 @@
-import { Flex, Button, Link } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 interface NavbarProps {
   width: number;

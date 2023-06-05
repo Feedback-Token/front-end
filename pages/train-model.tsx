@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "../components/layout";
 import { NextPage } from "next";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -198,7 +198,7 @@ const TrainModel: NextPage = () => {
     }
   };
   return (
-    <Layout title="Vernari Protocol">
+    <Layout title="BrainCloud">
       <Breadcrumb
         spacing="8px"
         separator={<ChevronRightIcon color="gray.500" />}

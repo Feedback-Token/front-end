@@ -19,16 +19,10 @@ import {
   Progress,
 } from "@chakra-ui/react";
 import { FC, useState, useEffect } from "react";
-import {
-  useContractWrite,
-  usePrepareContractWrite,
-  useNetwork,
-  useAccount,
-} from "wagmi";
+import { useNetwork, useAccount } from "wagmi";
 import { addresses } from "../../utils";
 import { ethers } from "ethers";
 import { prepareWriteContract, writeContract } from "@wagmi/core";
-import { getSubBalance } from "../../utils";
 import { useAppState } from "../../hooks/app-hooks";
 
 const IMAGE = "/images/braincloud.png";

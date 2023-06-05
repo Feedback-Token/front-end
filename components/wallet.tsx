@@ -29,7 +29,7 @@ import {
 } from "wagmi";
 
 export const Wallet: FC = () => {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const { data: ensName } = useEnsName();
   const { data: ensAvatar } = useEnsAvatar();
   const { disconnect } = useDisconnect();
